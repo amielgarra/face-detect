@@ -43,6 +43,10 @@ export const imageReducer = createReducer(
     loading: false,
     error,
   })),
+  on(ImageActions.setError, (state, { error }) => ({
+    ...state,
+    error,
+  })),
   on(ImageActions.clearError, (state) => ({
     ...state,
     error: null,

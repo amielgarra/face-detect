@@ -18,6 +18,11 @@ export const detectFacesFailure = createAction(
 
 export const clearError = createAction('[Image] Clear Error');
 
+export const setError = createAction(
+  '[Image] Set Error',
+  props<{ error: string }>()
+);
+
 export const clearCurrentImage = createAction('[Image] Clear Current Image');
 
 export const setSelectedImage = createAction(

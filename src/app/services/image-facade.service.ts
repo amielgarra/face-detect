@@ -31,6 +31,10 @@ export class ImageFacadeService {
     this.store.dispatch(ImageActions.uploadImage({ base64Image }));
   }
 
+  setError(error: string): void {
+    this.store.dispatch(ImageActions.setError({ error }));
+  }
+
   clearError(): void {
     this.store.dispatch(ImageActions.clearError());
   }

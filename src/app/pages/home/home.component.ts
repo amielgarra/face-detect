@@ -136,14 +136,23 @@ export class HomeComponent implements OnInit, OnDestroy {
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.uploadedImage = e.target?.result;
-        this.detectedFaces = [];
-        this.imageFacade.clearCurrentImage();
-        this.imageFacade.clearError();
-      };
-      reader.readAsDataURL(input.files[0]);
+      const file = input.files[0];
+
+      // Check if the selected file is an image
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.uploadedImage = e.target?.result;
+          this.detectedFaces = [];
+          this.imageFacade.clearCurrentImage();
+          this.imageFacade.clearError();
+        };
+        reader.readAsDataURL(file);
+      } else {
+        this.imageFacade.setError(
+          'Oops! 🤔 We need a picture! Please select an image file.'
+        );
+      }
     }
   }
 
