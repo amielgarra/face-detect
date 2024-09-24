@@ -45,13 +45,18 @@
             Choose Your Pic! 📸
           </button>
 
-          <div class="d-flex flex-column flex-sm-row mt-3">
+          <div
+            class="d-flex flex-column flex-sm-row mt-3"
+            *ngIf="uploadedImage"
+          >
             <!-- Button to reupload image -->
             <button
-              class="btn btn-warning me-sm-3 w-100"
+              class="btn btn-warning w-100"
               (click)="fileInput.click()"
-              *ngIf="uploadedImage"
               [disabled]="loading$ | async"
+              [ngClass]="{
+                'me-sm-3': !(currentResult$ | async) && !(error$ | async)
+              }"
             >
               Pick Another Snapshot! 📷
             </button>
@@ -60,9 +65,7 @@
             <button
               class="btn btn-success mt-2 mt-sm-0 w-100"
               (click)="uploadImage()"
-              *ngIf="
-                uploadedImage && !(currentResult$ | async) && !(error$ | async)
-              "
+              *ngIf="!(currentResult$ | async) && !(error$ | async)"
               [disabled]="loading$ | async"
             >
               {{
