@@ -1,0 +1,8 @@
+{
+  "/detect": {
+    "target": "https://face-2snbrq2o3a-ue.a.run.app",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

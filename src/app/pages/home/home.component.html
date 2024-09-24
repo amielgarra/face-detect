@@ -1,0 +1,105 @@
+<div class="container">
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🤔 Can We Guess Your Age and Gender? 🎉</h5>
+          <p class="card-text">
+            Upload your picture below, and let our clever app take a shot at
+            guessing your age and gender! Think you can fool it? Give it a try
+            and see if it gets it right! 😄
+          </p>
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            #fileInput
+            style="display: none"
+          />
+
+          <img
+            *ngIf="uploadedImage"
+            [src]="uploadedImage"
+            class="img-fluid mt-3"
+            [ngClass]="{ 'd-none': detectedFaces.length > 0 }"
+            alt="Uploaded Image"
+            height="300"
+            #imageElement
+          />
+
+          <!-- Canvas -->
+          <canvas
+            #canvas
+            *ngIf="uploadedImage"
+            height="300"
+            class="img-fluid mt-3"
+            [ngClass]="{ 'd-none': detectedFaces.length === 0 }"
+          ></canvas>
+
+          <!-- Button to trigger file input -->
+          <button
+            class="btn btn-primary mt-3 me-3"
+            (click)="fileInput.click()"
+            *ngIf="!uploadedImage && detectedFaces.length === 0"
+          >
+            Choose Your Pic! 📸
+          </button>
+
+          <!-- Button to reupload image -->
+          <button
+            class="btn btn-warning mt-3 me-3"
+            (click)="fileInput.click()"
+            *ngIf="uploadedImage"
+            [disabled]="loading$ | async"
+          >
+            Pick Another Snapshot! 📷
+          </button>
+
+          <!-- Button to upload image -->
+          <button
+            class="btn btn-success mt-3"
+            (click)="uploadImage()"
+            *ngIf="
+              uploadedImage && !(currentResult$ | async) && !(error$ | async)
+            "
+            [disabled]="loading$ | async"
+          >
+            {{
+              (loading$ | async)
+                ? "Magic in Progress... ✨"
+                : "Let's Guess Your Age! 🎉"
+            }}
+          </button>
+
+          <!-- Message for multiple faces detected -->
+          <div
+            *ngIf="(currentResult$ | async)?.multipleFaces"
+            class="alert alert-info mt-3 mb-0"
+          >
+            A Crowd! Multiple Faces Detected! 🎉
+          </div>
+
+          <!-- Error message section -->
+          <div
+            *ngIf="error$ | async as errorMessage"
+            class="alert alert-danger mt-3 mb-0"
+          >
+            {{ errorMessage }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Section -->
+  <ng-container *ngIf="history$ | async as history">
+    <div class="row justify-content-center mt-4" *ngIf="history.length > 0">
+      <div class="col-md-6">
+        <app-image-history
+          [uploadedImages]="history"
+          (imageSelected)="onImageSelected($event)"
+        ></app-image-history>
+      </div>
+    </div>
+  </ng-container>
+</div>

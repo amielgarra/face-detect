@@ -1,0 +1,12 @@
+<h5>History of Searches:</h5>
+<div class="row">
+  <div class="col-6 col-md-3 mb-2" *ngFor="let image of uploadedImages">
+    <div
+      class="thumbnail shadow-sm"
+      style="cursor: pointer"
+      (click)="onImageClick(image)"
+    >
+      <img [src]="image.base64" class="img-thumbnail" />
+    </div>
+  </div>
+</div>
