@@ -1,6 +1,6 @@
-<div class="container">
+<div class="container mb-4">
   <div class="row justify-content-center mt-4">
-    <div class="col-md-6">
+    <div class="col-md-6 col-sm-12">
       <div class="card text-center shadow-sm">
         <div class="card-body">
           <h5 class="card-title">🤔 Can We Guess Your Age and Gender? 🎉</h5>
@@ -38,38 +38,40 @@
 
           <!-- Button to trigger file input -->
           <button
-            class="btn btn-primary mt-3 me-3"
+            class="btn btn-primary mt-3"
             (click)="fileInput.click()"
             *ngIf="!uploadedImage && detectedFaces.length === 0"
           >
             Choose Your Pic! 📸
           </button>
 
-          <!-- Button to reupload image -->
-          <button
-            class="btn btn-warning mt-3 me-3"
-            (click)="fileInput.click()"
-            *ngIf="uploadedImage"
-            [disabled]="loading$ | async"
-          >
-            Pick Another Snapshot! 📷
-          </button>
+          <div class="d-flex flex-column flex-sm-row mt-3">
+            <!-- Button to reupload image -->
+            <button
+              class="btn btn-warning me-sm-3 w-100"
+              (click)="fileInput.click()"
+              *ngIf="uploadedImage"
+              [disabled]="loading$ | async"
+            >
+              Pick Another Snapshot! 📷
+            </button>
 
-          <!-- Button to upload image -->
-          <button
-            class="btn btn-success mt-3"
-            (click)="uploadImage()"
-            *ngIf="
-              uploadedImage && !(currentResult$ | async) && !(error$ | async)
-            "
-            [disabled]="loading$ | async"
-          >
-            {{
-              (loading$ | async)
-                ? "Magic in Progress... ✨"
-                : "Let's Guess Your Age! 🎉"
-            }}
-          </button>
+            <!-- Button to upload image -->
+            <button
+              class="btn btn-success mt-2 mt-sm-0 w-100"
+              (click)="uploadImage()"
+              *ngIf="
+                uploadedImage && !(currentResult$ | async) && !(error$ | async)
+              "
+              [disabled]="loading$ | async"
+            >
+              {{
+                (loading$ | async)
+                  ? "Magic in Progress... ✨"
+                  : "Let's Guess Your Age! 🎉"
+              }}
+            </button>
+          </div>
 
           <!-- Message for multiple faces detected -->
           <div
